@@ -1,0 +1,42 @@
+{
+  "name": "eli-andrews-photos",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "node ./scripts/buildPhotoList.js && next build && next export",
+    "postbuild": "cp CNAME ./out/CNAME && cp 404.html ./out/404.html && cd out && touch .nojekyll",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier ./**/*.tsx"
+  },
+  "dependencies": {
+    "axios": "0.21.2",
+    "nanoid": "^3.1.31",
+    "next": "12.1.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-images": "^1.2.0-beta.7",
+    "react-photo-gallery": "^8.0.0",
+    "sass": "^1.35.2"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "@types/react": "17.0.14",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.29.0",
+    "contentful": "^8.4.2",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "11.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "graphql": "^15.5.1",
+    "graphql-request": "^3.5.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2",
+    "pretty-quick": "^3.1.1",
+    "typescript": "4.3.5"
+  }
+}

@@ -1,0 +1,33 @@
+.subnav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-flow: row;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+
+.subnav li a{
+    padding: 10px;
+    color: #aaa;
+}
+
+.subnav li a:hover {
+    color: #889DF1;
+}
+
+.subnav li a.active {
+    color: #889DF1;
+}
+
+@media (max-width: 450px) {
+    .subnav {
+        flex-flow: column;
+    }
+    .subnav li a{
+        padding: 5px;
+        display: block;
+    }
+}

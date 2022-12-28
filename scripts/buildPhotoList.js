@@ -1,0 +1,63 @@
+const fs = require('fs')
+const contentful = require('contentful')
+const client = contentful.createClient({
+  // This is the space ID. A space is like a project folder in Contentful terms
+  space: 'hn94000t32hs',
+  // This is the access token for this space. Normally you get both ID and the token in the Contentful web app
+  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+  environment: 'Eli',
+  host: 'preview.contentful.com'
+})
+
+// This API call will request an entry with the specified ID from the space defined at the top, using a space-specific access token.
+client
+  .getEntries({
+    content_type: 'photo',
+  })
+  .then((galleries) => {
+    const output = galleries.items.map(
+      ({ fields: { name, images, slug, order } }) => {
+        return {
+          name,
+          images: images.map(buildImage),
+          slug,
+          order,
+        }
+      }
+    )
+
+    fs.writeFileSync(
+      'components/galleries.json',
+      JSON.stringify(output, null, 2)
+    )
+  })
+  .catch((err) => console.log(err))
+
+function buildImage({ fields, sys }) {
+  const { title, file } = fields
+  const { url, details } = file
+  const {
+    image: { width, height },
+  } = details
+
+  const src = `https:${url.replace(
+    'downloads.ctfassets.net',
+    'images.ctfassets.net'
+  )}`
+
+  const screenSizes = [640, 768, 1024, 1366, 1600, 1920]
+  const sizes = screenSizes.map((size) => {
+    return `(min-width: ${size}px) ${size}px`
+  })
+
+  sizes.push('100vw')
+
+  return {
+    key: sys.id,
+    title,
+    url: src,
+    src: `${src}?q=80&fm=webp&w=500`,
+    width,
+    height,
+  }
+}
